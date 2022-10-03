@@ -26,7 +26,7 @@ class Automobilis(models.Model):
         return f"{self.modelis} {self.valstybinis_nr} ({self.kliento_vardas})"
 
 class Uzsakymas(models.Model):
-    data = models.DateField("Data", auto_now_add=True)
+    data = models.DateField("Data")
     automobilis = models.ForeignKey("Automobilis", on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
