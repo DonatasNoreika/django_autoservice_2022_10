@@ -18,7 +18,7 @@ class UzsakymasAdmin(admin.ModelAdmin):
 
 class AutomobilisAdmin(admin.ModelAdmin):
     list_display = ('modelis', 'valstybinis_nr', 'vin_kodas', 'kliento_vardas')
-    list_filter = ('kliento_vardas', 'modelis')
+    list_filter = ('kliento_vardas', 'modelis', 'valstybinis_nr')
     search_fields = ('valstybinis_nr', 'vin_kodas', 'modelis__gamintojas', 'modelis__modelis')
 
 class PaslaugaAdmin(admin.ModelAdmin):
