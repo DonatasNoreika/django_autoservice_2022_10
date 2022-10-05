@@ -41,6 +41,15 @@ class Uzsakymas(models.Model):
     data = models.DateField("Data")
     automobilis = models.ForeignKey("Automobilis", on_delete=models.SET_NULL, null=True)
 
+    STATUS = (
+        ("p", "Patvirtinta"),
+        ("v", "Vykdoma"),
+        ("i", "Įvykdyta"),
+        ("a", "Atšaukta"),
+    )
+
+    statusas = models.CharField(max_length=1, choices=STATUS, default="p", help_text="Statusas")
+
     def __str__(self):
         return f"{self.data} {self.automobilis}"
 
