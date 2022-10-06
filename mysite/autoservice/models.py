@@ -39,7 +39,7 @@ class Automobilis(models.Model):
 
 class Uzsakymas(models.Model):
     data = models.DateField("Data")
-    automobilis = models.ForeignKey("Automobilis", on_delete=models.SET_NULL, null=True)
+    automobilis = models.ForeignKey("Automobilis", on_delete=models.SET_NULL, null=True, related_name="uzsakymai")
 
     def bendra(self):
         bendra = 0

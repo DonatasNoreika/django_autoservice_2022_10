@@ -8,4 +8,10 @@
     <li>VIN kodas: {{ automobilis.vin_kodas }}</li>
     <li>Klientas: {{ automobilis.kliento_vardas }}</li>
 </ul>
+<h3>Užsakymai:</h3>
+<ul>
+{% for uzsakymas in automobilis.uzsakymai.all %}
+    <li><a href="{% url 'uzsakymas' uzsakymas.id %}">{{ uzsakymas }}</a></li>
+{% endfor %}
+</ul>
 {% endblock %}

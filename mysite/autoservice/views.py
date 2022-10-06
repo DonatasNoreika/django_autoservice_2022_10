@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Paslauga, Uzsakymas, Automobilis
 from django.views import generic
 
+
 # Create your views here.
 def index(request):
     kontekstas = {
@@ -25,10 +26,10 @@ def automobilis(request, automobilis_id):
     }
     return render(request, 'automobilis.html', context=kontekstas)
 
-class Uzsakymai(generic.ListView):
+
+class UzsakymasListView(generic.ListView):
     model = Uzsakymas
 
 
-class Uzsakymas(generic.DetailView):
+class UzsakymasDetailView(generic.DetailView):
     model = Uzsakymas
-
