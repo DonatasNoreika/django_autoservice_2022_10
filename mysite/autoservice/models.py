@@ -41,12 +41,20 @@ class Uzsakymas(models.Model):
     data = models.DateField("Data")
     automobilis = models.ForeignKey("Automobilis", on_delete=models.SET_NULL, null=True)
 
+    def bendra(self):
+        bendra = 0
+        eilutes = self.eilutes.all()
+        for eilute in eilutes:
+            bendra += eilute.kiekis * eilute.paslauga.kaina
+        return bendra
+
     STATUS = (
         ("p", "Patvirtinta"),
         ("v", "Vykdoma"),
         ("i", "Įvykdyta"),
         ("a", "Atšaukta"),
     )
+
 
     statusas = models.CharField(max_length=1, choices=STATUS, default="p", help_text="Statusas")
 
@@ -59,9 +67,12 @@ class Uzsakymas(models.Model):
 
 
 class UzsakymoEilute(models.Model):
-    uzsakymas = models.ForeignKey("Uzsakymas", on_delete=models.CASCADE, null=True)
+    uzsakymas = models.ForeignKey("Uzsakymas", on_delete=models.CASCADE, null=True, related_name="eilutes")
     paslauga = models.ForeignKey("Paslauga", on_delete=models.SET_NULL, null=True)
     kiekis = models.IntegerField("Kiekis")
+
+    def suma(self):
+        return self.kiekis * self.paslauga.kaina
 
     def __str__(self):
         return f"{self.uzsakymas} {self.paslauga} {self.kiekis}"

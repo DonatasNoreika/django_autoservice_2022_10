@@ -7,5 +7,11 @@
     <li>Data: {{ object.data }}</li>
     <li>Statusas: {{ object.statusas }}</li>
 </ul>
-
+<hr>
+<ul>
+{% for eilute in object.eilutes.all %}
+    <li>{{ eilute.paslauga.pavadinimas }} - {{ eilute.kiekis }} * {{ eilute.paslauga.kaina }} = {{ eilute.suma }}</li>
+{% endfor %}
+</ul>
+<h3>Suma: {{ object.bendra }} </h3>
 {% endblock %}
