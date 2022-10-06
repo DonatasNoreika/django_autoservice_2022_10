@@ -2,6 +2,7 @@
 {% block title %}Automobiliai{% endblock %}
 
 {% block content %}
+<h1>Automobiliai:</h1>
 <ul>
 {% for automobilis in automobiliai %}
     <li><a href="{% url 'automobilis' automobilis.id %}">{{ automobilis }} </a></li>

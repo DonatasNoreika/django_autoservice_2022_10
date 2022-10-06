@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Užsakymas{% endblock %}
+
+{% block content %}
+<ul>
+    <li>Automobilis: <b>{{ object.automobilis }}</b></li>
+    <li>Data: {{ object.data }}</li>
+    <li>Statusas: {{ object.statusas }}</li>
+</ul>
+
+{% endblock %}
