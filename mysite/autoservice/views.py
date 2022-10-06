@@ -9,3 +9,10 @@ def index(request):
         'automobiliu_kiekis': Automobilis.objects.all().count(),
     }
     return render(request, 'index.html', context=kontekstas)
+
+
+def automobiliai(request):
+    kontekstas = {
+        'automobiliai': Automobilis.objects.all()
+    }
+    return render(request, 'automobiliai.html', context=kontekstas)
