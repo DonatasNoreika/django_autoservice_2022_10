@@ -4,7 +4,7 @@
 {% block content %}
 <ul>
 {% for automobilis in automobiliai %}
-    <li>{{ automobilis }}</li>
+    <li><a href="{% url 'automobilis' automobilis.id %}">{{ automobilis }} </a></li>
 {% endfor %}
 </ul>
 {% endblock %}
