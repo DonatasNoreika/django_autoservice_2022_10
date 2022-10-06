@@ -2,16 +2,44 @@
 {% block title %}Užsakymas{% endblock %}
 
 {% block content %}
+<h1>Užsakymas:</h1>
+<br>
 <ul>
     <li>Automobilis: <b>{{ object.automobilis }}</b></li>
     <li>Data: {{ object.data }}</li>
     <li>Statusas: {{ object.statusas }}</li>
 </ul>
-<hr>
-<ul>
-{% for eilute in object.eilutes.all %}
-    <li>{{ eilute.paslauga.pavadinimas }} - {{ eilute.kiekis }} * {{ eilute.paslauga.kaina }} = {{ eilute.suma }}</li>
-{% endfor %}
-</ul>
-<h3>Suma: {{ object.bendra }} </h3>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Paslauga</th>
+      <th scope="col">Kiekis</th>
+      <th scope="col">Kaina</th>
+      <th scope="col">Suma</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for eilute in object.eilutes.all %}
+    <tr>
+      <th scope="row">{{ eilute.paslauga.pavadinimas }}</th>
+      <td>{{ eilute.kiekis }}</td>
+      <td>{{ eilute.paslauga.kaina }}</td>
+      <td>{{ eilute.suma }}</td>
+    </tr>
+  {% endfor %}
+    <tr>
+        <td colspan="3"></td>
+      <th>SUMA: {{ object.bendra }}</th>
+    </tr>
+  </tbody>
+</table>
+
+<!--<ul>-->
+<!--{% for eilute in object.eilutes.all %}-->
+<!--    <li>{{ eilute.paslauga.pavadinimas }} - {{ eilute.kiekis }} * {{ eilute.paslauga.kaina }} = {{ eilute.suma }}</li>-->
+<!--{% endfor %}-->
+<!--</ul>-->
+<!--<h3>Suma: {{ object.bendra }} </h3>-->
+
 {% endblock %}
