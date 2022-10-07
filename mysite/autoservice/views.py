@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Paslauga, Uzsakymas, Automobilis
 from django.views import generic
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -14,8 +15,11 @@ def index(request):
 
 
 def automobiliai(request):
+    paginator = Paginator(Automobilis.objects.all(), 3)
+    page_number = request.GET.get('page')
+    puslapiuoti_automobiliai = paginator.get_page(page_number)
     kontekstas = {
-        'automobiliai': Automobilis.objects.all()
+        'automobiliai': puslapiuoti_automobiliai,
     }
     return render(request, 'automobiliai.html', context=kontekstas)
 

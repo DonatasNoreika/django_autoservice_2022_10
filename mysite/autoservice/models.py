@@ -36,6 +36,7 @@ class Automobilis(models.Model):
     class Meta:
         verbose_name = "Automobilis"
         verbose_name_plural = "Automobiliai"
+        ordering = ['-id']
 
 class Uzsakymas(models.Model):
     data = models.DateField("Data")
@@ -64,6 +65,7 @@ class Uzsakymas(models.Model):
     class Meta:
         verbose_name = "Užsakymas"
         verbose_name_plural = "Užsakymai"
+        ordering = ['-id']
 
 
 class UzsakymoEilute(models.Model):
