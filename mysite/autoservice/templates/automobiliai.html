@@ -2,12 +2,24 @@
 {% block title %}Automobiliai{% endblock %}
 
 {% block content %}
+{% load static %}
 <h1>Automobiliai:</h1>
-<ul>
-{% for automobilis in automobiliai %}
-    <li><a href="{% url 'automobilis' automobilis.id %}">{{ automobilis }} </a></li>
-{% endfor %}
-</ul>
+    <div class="row">
+    {% for automobilis in automobiliai %}
+        <div class="col-md-4 d-flex align-items-stretch">
+            <div class="card mb-4 shadow-sm">
+                {% if automobilis.photo %}
+                <img src="{{ automobilis.photo.url }}" class="card-img-top" alt="...">
+                {% else %}
+                <img src="{% static 'img/no-image.png' %}" class="card-img-top">
+                {% endif %}
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ automobilis.modelis }}</h6>
+                    <p class="card-text"><a href="{{ automobilis.pk }}">{{ automobilis }}</a></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 
 <div class="container puslapiai">
     <nav aria-label="...">
