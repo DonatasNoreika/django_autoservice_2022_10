@@ -2,6 +2,12 @@
 {% block title %}Automobilis{% endblock %}
 
 {% block content %}
+{% load static %}
+{% if automobilis.photo %}
+<img src="{{ automobilis.photo.url }}" style="width:300px" class="card-img-top" alt="...">
+{% else %}
+<img src="{% static 'img/no-image.png' %}" style="width:300px" class="card-img-top">
+{% endif %}
 <ul>
     <li>Automobilis: <b>{{ automobilis.modelis }}</b></li>
     <li>Valstybinis numeris: {{ automobilis.valstybinis_nr }}</li>

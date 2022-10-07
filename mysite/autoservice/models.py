@@ -29,6 +29,7 @@ class Automobilis(models.Model):
     valstybinis_nr = models.CharField("Valstybinis numeris", max_length=10)
     vin_kodas = models.CharField("VIN kodas", max_length=20)
     kliento_vardas = models.CharField("Kliento vardas", max_length=30)
+    photo = models.ImageField('Nuotrauka', upload_to='automobiliai', null=True)
 
     def __str__(self):
         return f"{self.modelis} {self.valstybinis_nr} ({self.kliento_vardas})"
