@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 import pytz
+from tinymce.models import HTMLField
+
 utc=pytz.UTC
 
 # Create your models here.
@@ -33,6 +35,7 @@ class Automobilis(models.Model):
     vin_kodas = models.CharField("VIN kodas", max_length=20)
     kliento_vardas = models.CharField("Kliento vardas", max_length=30)
     photo = models.ImageField('Nuotrauka', upload_to='automobiliai', null=True)
+    aprasymas = HTMLField("Aprašymas", null=True, blank=True)
 
     def __str__(self):
         return f"{self.modelis} {self.valstybinis_nr} ({self.kliento_vardas})"

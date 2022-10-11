@@ -15,6 +15,8 @@
     <li>Valstybinis numeris: {{ automobilis.valstybinis_nr }}</li>
     <li>VIN kodas: {{ automobilis.vin_kodas }}</li>
     <li>Klientas: {{ automobilis.kliento_vardas }}</li>
+    <li>Aprašymas: </li>
+    <p>{{ automobilis.aprasymas | safe }}</p>
 </ul>
 <h3>Užsakymai:</h3>
 <ul>

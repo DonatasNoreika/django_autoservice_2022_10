@@ -3,7 +3,7 @@ from .models import Paslauga, Uzsakymas, Automobilis
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 def index(request):
@@ -48,7 +48,7 @@ class UzsakymasListView(generic.ListView):
 class UzsakymasDetailView(generic.DetailView):
     model = Uzsakymas
 
-class MyUzsakymasListView(generic.ListView):
+class MyUzsakymasListView(generic.ListView, LoginRequiredMixin):
     model = Uzsakymas
     paginate_by = 4
 
