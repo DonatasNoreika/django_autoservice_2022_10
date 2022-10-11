@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+import pytz
+utc=pytz.UTC
 
 # Create your models here.
 class AutomobilioModelis(models.Model):
@@ -47,7 +49,7 @@ class Uzsakymas(models.Model):
     terminas = models.DateTimeField("Terminas", null=True, blank=True)
 
     def praejes_terminas(self):
-        if self.terminas and datetime.today() > self.terminas:
+        if self.terminas and datetime.today().replace(tzinfo=utc) > self.terminas.replace(tzinfo=utc):
             return True
         return False
 

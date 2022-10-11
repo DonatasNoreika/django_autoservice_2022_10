@@ -5,7 +5,9 @@
 <h1>Užsakymai:</h1>
 <ul>
 {% for uzsakymas in object_list %}
-    <li><a href="{% url 'uzsakymas' uzsakymas.pk %}">{{ uzsakymas }} </a></li>
+    <li class="{% if uzsakymas.praejes_terminas %}text-danger{% endif %}">
+        <a href="{% url 'uzsakymas' uzsakymas.pk %}">{{ uzsakymas }} </a>
+    </li>
 {% endfor %}
 </ul>
 <div class="pagination">
