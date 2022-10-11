@@ -47,3 +47,12 @@ class UzsakymasListView(generic.ListView):
 
 class UzsakymasDetailView(generic.DetailView):
     model = Uzsakymas
+
+class MyUzsakymasListView(generic.ListView):
+    model = Uzsakymas
+    paginate_by = 4
+
+    def get_queryset(self):
+        return Uzsakymas.objects.filter(vartotojas=self.request.user)
+
+

@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.contrib.auth.models import User
+from datetime import datetime
 
 # Create your models here.
 class AutomobilioModelis(models.Model):
@@ -40,8 +41,15 @@ class Automobilis(models.Model):
         ordering = ['-id']
 
 class Uzsakymas(models.Model):
-    data = models.DateField("Data")
+    data = models.DateField("Data", auto_now_add=True, blank=True)
     automobilis = models.ForeignKey("Automobilis", on_delete=models.SET_NULL, null=True, related_name="uzsakymai")
+    vartotojas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    terminas = models.DateTimeField("Terminas", null=True, blank=True)
+
+    def praejes_terminas(self):
+        if self.terminas and datetime.today() > self.terminas:
+            return True
+        return False
 
     def bendra(self):
         bendra = 0
