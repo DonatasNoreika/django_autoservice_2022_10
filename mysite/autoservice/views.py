@@ -1,14 +1,17 @@
-from django.shortcuts import render, get_object_or_404, reverse
-from .models import Paslauga, Uzsakymas, Automobilis
+from django.shortcuts import (render,
+                              get_object_or_404,
+                              reverse,
+                              redirect)
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
 from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.views.generic.edit import FormMixin
+
+from .models import Paslauga, Uzsakymas, Automobilis
 from .forms import UzsakymoKomentarasForm
 
 # Create your views here.
