@@ -103,3 +103,6 @@ class UzsakymoKomentaras(models.Model):
     vartotojas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     data = models.DateTimeField("Data", auto_now_add=True)
     komentaras = models.TextField("Komentaras", max_length=2000)
+
+    class Meta:
+        ordering = ['-data']

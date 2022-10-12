@@ -37,7 +37,18 @@
 </table>
 </br>
   <h4>Komentarai:</h4>
-  {% if object.komentarai.all %}
+  {% if user.is_authenticated %}
+  <div class="fieldWrapper">
+    <hr><br/>
+    <h4>Palikite komentarą:</h4>
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form.komentaras }}</br>
+      <input type="submit" value="Išsaugoti">
+    </form>
+  </div>
+  {% endif %}
+  {% if object.komentarai %}
     {% for komentaras in object.komentarai.all %}
       <hr>
       <strong>{{ komentaras.vartotojas }}</strong>, <em>{{ komentaras.data}}</em>
