@@ -10,11 +10,26 @@ from .models import (AutomobilioModelis,
 class UzsakymoEiluteInline(admin.TabularInline):
     model = UzsakymoEilute
     extra = 0
+    readonly_fields = ('suma',)
+    fieldsets = (
+        ("General", {'fields': ('paslauga', 'kiekis', 'suma')}),
+    )
 
+class UzsakymoEiluteAdmin(admin.ModelAdmin):
+    model = UzsakymoEilute
+    readonly_fields = ('suma',)
+    fieldsets = (
+        ("General", {'fields': ('paslauga', 'kiekis', 'suma')}),
+    )
 
 class UzsakymasAdmin(admin.ModelAdmin):
-    list_display = ('automobilis', 'data')
+    list_display = ('automobilis', 'data', 'bendra')
     inlines = [UzsakymoEiluteInline]
+    readonly_fields = ('bendra', 'data')
+
+    fieldsets = (
+        ("General", {'fields': ('automobilis', 'data', 'bendra')}),
+    )
 
 
 class AutomobilisAdmin(admin.ModelAdmin):
@@ -35,5 +50,5 @@ admin.site.register(AutomobilioModelis)
 admin.site.register(Automobilis, AutomobilisAdmin)
 admin.site.register(Paslauga, PaslaugaAdmin)
 admin.site.register(Uzsakymas, UzsakymasAdmin)
-admin.site.register(UzsakymoEilute)
+admin.site.register(UzsakymoEilute, UzsakymoEiluteAdmin)
 admin.site.register(UzsakymoKomentaras, UzsakymoKomentarasAdmin)
