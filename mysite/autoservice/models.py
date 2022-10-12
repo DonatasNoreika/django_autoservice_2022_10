@@ -96,3 +96,10 @@ class UzsakymoEilute(models.Model):
     class Meta:
         verbose_name = "Užsakyta paslauga"
         verbose_name_plural = "Užsakytos paslaugos"
+
+
+class UzsakymoKomentaras(models.Model):
+    uzsakymas = models.ForeignKey('Uzsakymas', on_delete=models.SET_NULL, null=True, blank=True, related_name='komentarai')
+    vartotojas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    data = models.DateTimeField("Data", auto_now_add=True)
+    komentaras = models.TextField("Komentaras", max_length=2000)

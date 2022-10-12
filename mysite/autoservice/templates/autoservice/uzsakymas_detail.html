@@ -35,12 +35,15 @@
     </tr>
   </tbody>
 </table>
-
-<!--<ul>-->
-<!--{% for eilute in object.eilutes.all %}-->
-<!--    <li>{{ eilute.paslauga.pavadinimas }} - {{ eilute.kiekis }} * {{ eilute.paslauga.kaina }} = {{ eilute.suma }}</li>-->
-<!--{% endfor %}-->
-<!--</ul>-->
-<!--<h3>Suma: {{ object.bendra }} </h3>-->
-
+</br>
+  <h4>Komentarai:</h4>
+  {% if object.komentarai.all %}
+    {% for komentaras in object.komentarai.all %}
+      <hr>
+      <strong>{{ komentaras.vartotojas }}</strong>, <em>{{ komentaras.data}}</em>
+      <p>{{ komentaras.komentaras }}</p>
+    {% endfor %}
+  {% else %}
+    <p>Nėra komentarų</p>
+  {% endif %}
 {% endblock %}
