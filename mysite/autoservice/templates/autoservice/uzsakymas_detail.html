@@ -9,6 +9,7 @@
     <li>Data: {{ object.data }}</li>
     <li>Statusas: {{ object.statusas }}</li>
     <li>Terminas: {{ object.terminas }}</li>
+    <li>Vartotojas: {{ object.vartotojas }}</li>
 </ul>
 
 <table class="table table-bordered">
@@ -36,6 +37,7 @@
   </tbody>
 </table>
 </br>
+  <img class="rounded-circle account-img" src="{{ object.vartotojas.profile.nuotrauka.url }}">
   <h4>Komentarai:</h4>
   {% if user.is_authenticated %}
   <div class="fieldWrapper">
