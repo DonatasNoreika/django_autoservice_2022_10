@@ -10,9 +10,12 @@ from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.views.generic.edit import FormMixin
+from django.contrib.auth.decorators import login_required
+
 
 from .models import Paslauga, Uzsakymas, Automobilis
 from .forms import UzsakymoKomentarasForm
+
 
 # Create your views here.
 def index(request):
@@ -114,4 +117,6 @@ class MyUzsakymasListView(generic.ListView, LoginRequiredMixin):
     def get_queryset(self):
         return Uzsakymas.objects.filter(vartotojas=self.request.user)
 
-
+@login_required
+def profilis(request):
+    return render(request, 'profile.html')
