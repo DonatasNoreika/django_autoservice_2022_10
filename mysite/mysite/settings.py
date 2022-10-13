@@ -41,6 +41,7 @@ EMAIL_HOST_PASSWORD = 'VerySecret'
 
 INSTALLED_APPS = [
     'tinymce',
+    'crispy_forms',
     'autoservice',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -165,3 +166,5 @@ TINYMCE_DEFAULT_CONFIG = {
     'menubar': True,
     'statusbar': True,
     }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
