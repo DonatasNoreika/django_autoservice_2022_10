@@ -12,6 +12,12 @@
     <li>Vartotojas: {{ object.vartotojas }}</li>
 </ul>
 
+{% if object.vartotojas == user %}
+<div>
+  <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'manouzsakymas_update' object.id %}">Redaguoti</a>
+</div>
+{% endif %}
+
 <table class="table table-bordered">
   <thead>
     <tr>
