@@ -164,7 +164,7 @@ class MyUzsakymasCreateView(generic.CreateView, LoginRequiredMixin):
 class MyUzsakymasUpdateView(generic.UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     model = Uzsakymas
     fields = ['automobilis', 'terminas']
-    success_url = '/autos0ervice/manouzsakymai/'
+    success_url = '/autoservice/manouzsakymai/'
     template_name = 'manouzsakymas_form.html'
 
     # form_class = MyUzsakymasCreateForm
