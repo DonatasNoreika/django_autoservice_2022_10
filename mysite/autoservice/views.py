@@ -13,7 +13,10 @@ from django.views.generic.edit import FormMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 
-from .models import Paslauga, Uzsakymas, Automobilis
+from .models import (Paslauga,
+                     Uzsakymas,
+                     Automobilis,
+                     UzsakymoEilute)
 from .forms import (UzsakymoKomentarasForm,
                     UserUpdateForm,
                     ProfileUpdateForm,
@@ -176,3 +179,16 @@ class MyUzsakymasDeleteView(generic.DeleteView, LoginRequiredMixin, UserPassesTe
     model = Uzsakymas
     success_url = '/autoservice/manouzsakymai/'
     template_name = "manouzsakymas_delete.html"
+
+class MyUzsakymoEiluteCreateView(generic.CreateView, LoginRequiredMixin, UserPassesTestMixin):
+    model = UzsakymoEilute
+    fields = ['paslauga', 'kiekis']
+    template_name = 'uzsakymoeilute_form.html'
+
+    def get_success_url(self):
+        return reverse('uzsakymas', kwargs={'pk': self.kwargs['pk']})
+
+    def form_valid(self, form):
+        form.instance.uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['pk'])
+        form.save()
+        return super().form_valid(form)
