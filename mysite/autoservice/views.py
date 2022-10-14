@@ -199,3 +199,16 @@ class MyUzsakymoEiluteDeleteView(generic.DeleteView, LoginRequiredMixin):
 
     def get_success_url(self):
         return reverse('uzsakymas', kwargs={'pk': self.kwargs['pk2']})
+
+class MyUzsakymoEiluteUpdateView(generic.UpdateView, LoginRequiredMixin):
+    model = UzsakymoEilute
+    fields = ['paslauga', 'kiekis']
+    template_name = 'uzsakymoeilute_form.html'
+
+    def get_success_url(self):
+        return reverse('uzsakymas', kwargs={'pk': self.kwargs['pk2']})
+
+    def form_valid(self, form):
+        form.instance.uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['pk2'])
+        form.save()
+        return super().form_valid(form)
