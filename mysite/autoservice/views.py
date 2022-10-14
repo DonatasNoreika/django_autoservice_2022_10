@@ -22,6 +22,7 @@ from .forms import (UzsakymoKomentarasForm,
                     ProfileUpdateForm,
                     MyUzsakymasCreateForm)
 
+
 # Create your views here.
 def index(request):
     num_visits = request.session.get('num_visits', 1)
@@ -159,11 +160,13 @@ class MyUzsakymasCreateView(generic.CreateView, LoginRequiredMixin):
         form.save()
         return super().form_valid(form)
 
+
 class MyUzsakymasUpdateView(generic.UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     model = Uzsakymas
     fields = ['automobilis', 'terminas']
     success_url = '/autos0ervice/manouzsakymai/'
     template_name = 'manouzsakymas_form.html'
+
     # form_class = MyUzsakymasCreateForm
 
     def form_valid(self, form):
@@ -175,10 +178,16 @@ class MyUzsakymasUpdateView(generic.UpdateView, LoginRequiredMixin, UserPassesTe
         uzsakymas = self.get_object()
         return self.request.user == uzsakymas.vartotojas
 
+
 class MyUzsakymasDeleteView(generic.DeleteView, LoginRequiredMixin, UserPassesTestMixin):
     model = Uzsakymas
     success_url = '/autoservice/manouzsakymai/'
     template_name = "manouzsakymas_delete.html"
+
+    def test_func(self):
+        uzsakymas = self.get_object()
+        return self.request.user == uzsakymas.vartotojas
+
 
 class MyUzsakymoEiluteCreateView(generic.CreateView, LoginRequiredMixin, UserPassesTestMixin):
     model = UzsakymoEilute
@@ -193,12 +202,24 @@ class MyUzsakymoEiluteCreateView(generic.CreateView, LoginRequiredMixin, UserPas
         form.save()
         return super().form_valid(form)
 
-class MyUzsakymoEiluteDeleteView(generic.DeleteView, LoginRequiredMixin):
+    def test_func(self):
+        uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['pk'])
+        atsakymas = self.request.user == uzsakymas.vartotojas
+        return atsakymas
+
+
+class MyUzsakymoEiluteDeleteView(generic.DeleteView, LoginRequiredMixin, UserPassesTestMixin):
     model = UzsakymoEilute
     template_name = "uzsakymoeilute_delete.html"
 
     def get_success_url(self):
         return reverse('uzsakymas', kwargs={'pk': self.kwargs['pk2']})
+
+    def test_func(self):
+        uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['pk2'])
+        atsakymas = self.request.user == uzsakymas.vartotojas
+        return atsakymas
+
 
 class MyUzsakymoEiluteUpdateView(generic.UpdateView, LoginRequiredMixin):
     model = UzsakymoEilute
@@ -212,3 +233,8 @@ class MyUzsakymoEiluteUpdateView(generic.UpdateView, LoginRequiredMixin):
         form.instance.uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['pk2'])
         form.save()
         return super().form_valid(form)
+
+    def test_func(self):
+        uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['pk2'])
+        atsakymas = self.request.user == uzsakymas.vartotojas
+        return atsakymas
