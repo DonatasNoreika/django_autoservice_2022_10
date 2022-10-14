@@ -14,8 +14,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 
 from .models import Paslauga, Uzsakymas, Automobilis
-from .forms import UzsakymoKomentarasForm, UserUpdateForm, ProfileUpdateForm
-
+from .forms import (UzsakymoKomentarasForm,
+                    UserUpdateForm,
+                    ProfileUpdateForm,
+                    MyUzsakymasCreateForm)
 
 # Create your views here.
 def index(request):
@@ -144,9 +146,10 @@ class MyUzsakymasListView(generic.ListView, LoginRequiredMixin):
 
 class MyUzsakymasCreateView(generic.CreateView, LoginRequiredMixin):
     model = Uzsakymas
-    fields = ['automobilis', 'terminas']
+    # fields = ['automobilis', 'terminas']
     success_url = '/autoservice/manouzsakymai/'
     template_name = 'manouzsakymas_form.html'
+    form_class = MyUzsakymasCreateForm
 
     def form_valid(self, form):
         form.instance.vartotojas = self.request.user
@@ -156,8 +159,9 @@ class MyUzsakymasCreateView(generic.CreateView, LoginRequiredMixin):
 class MyUzsakymasUpdateView(generic.UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     model = Uzsakymas
     fields = ['automobilis', 'terminas']
-    success_url = '/autoservice/manouzsakymai/'
+    success_url = '/autos0ervice/manouzsakymai/'
     template_name = 'manouzsakymas_form.html'
+    # form_class = MyUzsakymasCreateForm
 
     def form_valid(self, form):
         form.instance.vartotojas = self.request.user

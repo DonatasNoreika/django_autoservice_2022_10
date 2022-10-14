@@ -1,4 +1,4 @@
-from .models import UzsakymoKomentaras, Profile
+from .models import UzsakymoKomentaras, Profile, Uzsakymas
 from django.contrib.auth.models import User
 from django import forms
 
@@ -21,3 +21,15 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['nuotrauka']
+
+class MyDateTimeInput(forms.DateTimeInput):
+    input_type = 'date'
+
+class MyUzsakymasCreateForm(forms.ModelForm):
+    class Meta:
+        model = Uzsakymas
+        fields = ['automobilis', 'terminas', 'vartotojas']
+        widgets = {
+            'vartotojas': forms.HiddenInput(),
+            'terminas': MyDateTimeInput(),
+        }
