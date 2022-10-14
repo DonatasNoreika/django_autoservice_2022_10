@@ -12,7 +12,6 @@ from django.contrib import messages
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.decorators import login_required
 
-
 from .models import Paslauga, Uzsakymas, Automobilis
 from .forms import UzsakymoKomentarasForm, UserUpdateForm, ProfileUpdateForm
 
@@ -49,7 +48,9 @@ def automobilis(request, automobilis_id):
 
 def search(request):
     query = request.GET.get('query')
-    search_results = Automobilis.objects.filter(Q(kliento_vardas__icontains=query) | Q(modelis__gamintojas__icontains=query) | Q(modelis__modelis__icontains=query) | Q(valstybinis_nr__icontains=query) | Q(vin_kodas__icontains=query))
+    search_results = Automobilis.objects.filter(
+        Q(kliento_vardas__icontains=query) | Q(modelis__gamintojas__icontains=query) | Q(
+            modelis__modelis__icontains=query) | Q(valstybinis_nr__icontains=query) | Q(vin_kodas__icontains=query))
     return render(request, 'search.html', {'automobiliai': search_results, 'query': query})
 
 
@@ -81,6 +82,28 @@ def register(request):
             messages.error(request, 'Slaptažodžiai nesutampa!')
             return redirect('register')
     return render(request, 'registration/register.html')
+
+
+@login_required
+def profile(request):
+    if request.method == "POST":
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.info(request, f"Profilis atnaujintas")
+            return redirect('profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form,
+    }
+    return render(request, 'profile.html', context)
+
 
 class UzsakymasListView(generic.ListView):
     model = Uzsakymas
@@ -117,22 +140,14 @@ class MyUzsakymasListView(generic.ListView, LoginRequiredMixin):
     def get_queryset(self):
         return Uzsakymas.objects.filter(vartotojas=self.request.user)
 
-@login_required
-def profile(request):
-    if request.method == "POST":
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        if u_form.is_valid() and p_form.is_valid():
-            u_form.save()
-            p_form.save()
-            messages.info(request, f"Profilis atnaujintas")
-            return redirect('profile')
-    else:
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
 
-    context = {
-        'u_form': u_form,
-        'p_form': p_form,
-    }
-    return render(request, 'profile.html', context)
+class MyUzsakymasCreateView(generic.CreateView, LoginRequiredMixin):
+    model = Uzsakymas
+    fields = ['automobilis', 'terminas']
+    success_url = '/autoservice/manouzsakymai/'
+    template_name = 'manouzsakymas_form.html'
+
+    def form_valid(self, form):
+        form.instance.vartotojas = self.request.user
+        form.save()
+        return super().form_valid(form)
