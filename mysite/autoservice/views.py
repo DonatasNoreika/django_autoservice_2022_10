@@ -140,7 +140,7 @@ class UzsakymasDetailView(generic.DetailView, FormMixin):
         return super().form_valid(form)
 
 
-class MyUzsakymasListView(generic.ListView, LoginRequiredMixin):
+class MyUzsakymasListView(LoginRequiredMixin, generic.ListView):
     model = Uzsakymas
     paginate_by = 4
 
@@ -148,7 +148,7 @@ class MyUzsakymasListView(generic.ListView, LoginRequiredMixin):
         return Uzsakymas.objects.filter(vartotojas=self.request.user)
 
 
-class MyUzsakymasCreateView(generic.CreateView, LoginRequiredMixin):
+class MyUzsakymasCreateView(LoginRequiredMixin, generic.CreateView):
     model = Uzsakymas
     # fields = ['automobilis', 'terminas']
     success_url = '/autoservice/manouzsakymai/'
@@ -161,7 +161,7 @@ class MyUzsakymasCreateView(generic.CreateView, LoginRequiredMixin):
         return super().form_valid(form)
 
 
-class MyUzsakymasUpdateView(generic.UpdateView, LoginRequiredMixin, UserPassesTestMixin):
+class MyUzsakymasUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = Uzsakymas
     fields = ['automobilis', 'terminas']
     success_url = '/autoservice/manouzsakymai/'
@@ -179,7 +179,7 @@ class MyUzsakymasUpdateView(generic.UpdateView, LoginRequiredMixin, UserPassesTe
         return self.request.user == uzsakymas.vartotojas
 
 
-class MyUzsakymasDeleteView(generic.DeleteView, LoginRequiredMixin, UserPassesTestMixin):
+class MyUzsakymasDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
     model = Uzsakymas
     success_url = '/autoservice/manouzsakymai/'
     template_name = "manouzsakymas_delete.html"
@@ -189,7 +189,7 @@ class MyUzsakymasDeleteView(generic.DeleteView, LoginRequiredMixin, UserPassesTe
         return self.request.user == uzsakymas.vartotojas
 
 
-class MyUzsakymoEiluteCreateView(generic.CreateView, LoginRequiredMixin, UserPassesTestMixin):
+class MyUzsakymoEiluteCreateView(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
     model = UzsakymoEilute
     fields = ['paslauga', 'kiekis']
     template_name = 'uzsakymoeilute_form.html'
@@ -208,7 +208,7 @@ class MyUzsakymoEiluteCreateView(generic.CreateView, LoginRequiredMixin, UserPas
         return atsakymas
 
 
-class MyUzsakymoEiluteDeleteView(generic.DeleteView, LoginRequiredMixin, UserPassesTestMixin):
+class MyUzsakymoEiluteDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
     model = UzsakymoEilute
     template_name = "uzsakymoeilute_delete.html"
 
@@ -221,7 +221,7 @@ class MyUzsakymoEiluteDeleteView(generic.DeleteView, LoginRequiredMixin, UserPas
         return atsakymas
 
 
-class MyUzsakymoEiluteUpdateView(generic.UpdateView, LoginRequiredMixin):
+class MyUzsakymoEiluteUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = UzsakymoEilute
     fields = ['paslauga', 'kiekis']
     template_name = 'uzsakymoeilute_form.html'
