@@ -15,6 +15,7 @@
 {% if object.vartotojas == user %}
 <div>
   <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'manouzsakymas_update' object.id %}">Redaguoti</a>
+  <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'manouzsakymas_delete' object.id %}">Ištrinti</a>
 </div>
 {% endif %}
 

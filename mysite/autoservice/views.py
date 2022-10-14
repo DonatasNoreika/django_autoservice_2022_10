@@ -168,3 +168,7 @@ class MyUzsakymasUpdateView(generic.UpdateView, LoginRequiredMixin, UserPassesTe
         uzsakymas = self.get_object()
         return self.request.user == uzsakymas.vartotojas
 
+class MyUzsakymasDeleteView(generic.DeleteView, LoginRequiredMixin, UserPassesTestMixin):
+    model = Uzsakymas
+    success_url = '/autoservice/manouzsakymai/'
+    template_name = "manouzsakymas_delete.html"

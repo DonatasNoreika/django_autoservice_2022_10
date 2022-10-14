@@ -14,4 +14,5 @@ urlpatterns = [
     path('manouzsakymai/', views.MyUzsakymasListView.as_view(), name='manouzsakymai'),
     path('manouzsakymai/new', views.MyUzsakymasCreateView.as_view(), name='manouzsakymas_new'),
     path('uzsakymai/<int:pk>/update', views.MyUzsakymasUpdateView.as_view(), name="manouzsakymas_update"),
+    path('uzsakymai/<int:pk>/delete', views.MyUzsakymasDeleteView.as_view(), name="manouzsakymas_delete"),
 ]
