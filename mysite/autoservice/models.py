@@ -4,6 +4,7 @@ from datetime import datetime
 import pytz
 from tinymce.models import HTMLField
 from PIL import Image
+from django.utils.translation import gettext_lazy as _
 
 utc=pytz.UTC
 
@@ -47,15 +48,17 @@ class Automobilis(models.Model):
         ordering = ['-id']
 
 class Uzsakymas(models.Model):
-    data = models.DateField("Data", auto_now_add=True, blank=True)
+    data = models.DateField(_("Date"), auto_now_add=True, blank=True)
     automobilis = models.ForeignKey("Automobilis", on_delete=models.SET_NULL, null=True, related_name="uzsakymai")
     vartotojas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    terminas = models.DateTimeField("Terminas", null=True, blank=True)
+    terminas = models.DateTimeField(_("Deadline"), null=True, blank=True)
 
     def praejes_terminas(self):
         if self.terminas and datetime.today().replace(tzinfo=utc) > self.terminas.replace(tzinfo=utc):
             return True
         return False
+
+    praejes_terminas.short_description = _("Past Deadline")
 
     def bendra(self):
         bendra = 0
@@ -64,29 +67,31 @@ class Uzsakymas(models.Model):
             bendra += eilute.kiekis * eilute.paslauga.kaina
         return bendra
 
+    bendra.short_description = _("Total")
+
     STATUS = (
-        ("p", "Patvirtinta"),
-        ("v", "Vykdoma"),
-        ("i", "Įvykdyta"),
-        ("a", "Atšaukta"),
+        ("p", _("Confirmed")),
+        ("v", _("In Progress")),
+        ("i", _("Done")),
+        ("a", _("Cancelled")),
     )
 
 
-    statusas = models.CharField(max_length=1, choices=STATUS, default="p", help_text="Statusas")
+    statusas = models.CharField(_("Status"), max_length=1, choices=STATUS, default="p", help_text="Statusas")
 
     def __str__(self):
         return f"{self.data} {self.automobilis}"
 
     class Meta:
-        verbose_name = "Užsakymas"
-        verbose_name_plural = "Užsakymai"
+        verbose_name = _("Order")
+        verbose_name_plural = _("Orders")
         ordering = ['-id']
 
 
 class UzsakymoEilute(models.Model):
     uzsakymas = models.ForeignKey("Uzsakymas", on_delete=models.CASCADE, null=True, related_name="eilutes")
     paslauga = models.ForeignKey("Paslauga", on_delete=models.SET_NULL, null=True)
-    kiekis = models.IntegerField("Kiekis")
+    kiekis = models.IntegerField(_("Quantity"))
 
     def suma(self):
         return self.kiekis * self.paslauga.kaina
@@ -95,8 +100,8 @@ class UzsakymoEilute(models.Model):
         return f"{self.uzsakymas} {self.paslauga} {self.kiekis}"
 
     class Meta:
-        verbose_name = "Užsakyta paslauga"
-        verbose_name_plural = "Užsakytos paslaugos"
+        verbose_name = _("Order Line")
+        verbose_name_plural = _("Order Lines")
 
 
 class UzsakymoKomentaras(models.Model):
