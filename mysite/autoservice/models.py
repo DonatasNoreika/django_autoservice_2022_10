@@ -96,6 +96,8 @@ class UzsakymoEilute(models.Model):
     def suma(self):
         return self.kiekis * self.paslauga.kaina
 
+    suma.short_description = _("Sum")
+
     def __str__(self):
         return f"{self.uzsakymas} {self.paslauga} {self.kiekis}"
 
