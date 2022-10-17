@@ -89,8 +89,8 @@ class Uzsakymas(models.Model):
 
 
 class UzsakymoEilute(models.Model):
-    uzsakymas = models.ForeignKey("Uzsakymas", on_delete=models.CASCADE, null=True, related_name="eilutes")
-    paslauga = models.ForeignKey("Paslauga", on_delete=models.SET_NULL, null=True)
+    uzsakymas = models.ForeignKey(verbose_name=_("Order"), to="Uzsakymas", on_delete=models.CASCADE, null=True, related_name="eilutes")
+    paslauga = models.ForeignKey(verbose_name=_("Service"), to="Paslauga", on_delete=models.SET_NULL, null=True)
     kiekis = models.IntegerField(_("Quantity"))
 
     def suma(self):
